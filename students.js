@@ -1,59 +1,105 @@
 "use strict";
 
-let selectTheElement = (selectElement) => {
-    return document.querySelector(selectElement);
-};
+let allStudents = DATABASE.students
+let allCourses = DATABASE.courses
 
-//Kolla upp varför vi har denna funktion
-// let clearResults = () => {
-//     selectTheElement("#student").innerHTML = "";
-// }
+function renderStudent (student) {
+    let div = document.createElement("div");
+    div.id = "student-div";
+    div.innerHTML += `
+        <h2>${student.firstName} ${student.lastName} (total ${studentCredits(student)} credits)</h2>
+        <h3>Courses:</h3>
+        <div id="coursesDiv">
+        ${allStudentCourses(student)}
+        </div>
+    `;
 
-function getCourseById () {
-    for (let i = 0; i < DATABASE.courses.length; i++) {
+    return div;
+}
 
-        if (DATABASE.courses[i].courseId == DATABASE.students.courses.courseId) {
-        return;
-        }
+function renderStudents (students) {
+    let studentsElement = document.getElementById("student-results");
+
+    for (let student of students) {
+        let studentElement = renderStudent(student);
+        studentsElement.appendChild(studentElement);    
     }
 }
 
-function getTheResults () {
-    let search = selectTheElement("#student").value;
+function studentCredits (student) {
+    let credits = [];
 
-    // clearResults();
-
-    if (search.length > 0) {
-        for (let i = 0; i < DATABASE.students.length; i++) {
-            if (DATABASE.students[i].lastName.toLocaleLowerCase().includes(search.toLocaleLowerCase())) {
-                selectTheElement(".student-result").innerHTML += `
-                    <header id="nameStudents">${DATABASE.students[i].firstName} ${DATABASE.students[i].lastName}</header>
-                    <h4>Courses:</h4>
-                    <div id="grid">
-                    <div id="box"></div>
-                    </div>
-                `;
-            }
-        }
+    for (let course of student.courses) {
+        credits.push(course.passedCredits);
     }
 
-    let foundCourses = getCourseById();
-    
-    for (let i = 0; i < foundCourses.length; i++) {
-        document.getElementById("#box").innerText = foundCourses[i].title + " of " + foundCourses[i].totalCredits + " credits"
+    let creditSum = 0;
+    for (let i = 0; i < credits.length; i++) {
+        creditSum += credits[i];
         
     }
 
+    return creditSum;
 }
 
-// DATABASE.students.forEach((student) => {
-//     student.courses.forEach(
-//         (studentCourse) => {
-//             let foundCourse = DATABASE.courses.find((dbCourse) => {
-//                 return dbCourse.courseId == studentCourse.courseId;
-//             });
+function allStudentCourses(student) {
+    let theCourses = [];
 
-//     })
-// })
+    for (let i = 0; i < student.courses.length; i++) {
+        let Id = student.courses[i].courseId;
+        theCourses.push(allCourses[Id]);
+    }
 
-selectTheElement("#student").addEventListener("keyup", getTheResults);
+    let courseArray = [];
+
+    for (let i = 0; i < theCourses.length; i++) {
+        let div = document.createElement("div");
+
+        if (student.courses[i].passedCredits == 
+            allCourses[student.courses[i].courseId].totalCredits
+        ) {
+            let info = (div.innerHTML = `
+            <div id="done">
+            <h4>${allCourses[i].title}</h4>
+            <p>${student.courses[i].started.semester} ${student.courses[i].started.year} 
+            ( ${student.courses[i].passedCredits} of 
+            ${allCourses[student.courses[i].courseId].totalCredits} credits)
+            </div>
+            `)
+            courseArray.push(info)
+        } else {
+            let info = (div.innerHTML = `
+            <div id="not-done">
+            <h4>${allCourses[i].title}</h4>
+            <p>${student.courses[i].started.semester} ${student.courses[i].started.year} 
+            ( ${student.courses[i].passedCredits} of 
+            ${allCourses[student.courses[i].courseId].totalCredits} credits)
+            </div>
+            `)
+            courseArray.push(info)
+        }
+    }
+
+    return courseArray
+        .toString()
+        .split(",")
+        .join("")
+}
+
+function inputResult () {
+    let resultArray = [];
+    let input = document.getElementById("student-input");
+
+    for (let i = 0; i < allStudents.length; i++) {
+        document.querySelector("#student-results").innerHTML = "";
+        if ("" == input.value) { 
+            document.querySelector("#student-results").innerHTML = "";
+        } else if (allStudents[i].lastName.toLocaleLowerCase().includes(input.value)) {
+            resultArray.push(allStudents[i]);
+        }
+    }
+
+    renderStudents(resultArray);
+}
+
+document.getElementById("student-input").addEventListener("keyup", inputResult);
