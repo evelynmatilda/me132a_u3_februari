@@ -1,0 +1,76 @@
+body {
+    background-color: rgb(255, 244, 230);
+}
+
+#search-h {
+    margin-bottom: 1px;
+    margin-left: 15px;
+}
+
+#course-input {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    margin-left: 15px;
+
+    height: 40px;
+    width: 280px;
+}
+
+#course-results {
+    background-color: bisque;
+    margin: 20px;
+}
+
+#course-div {
+    gap: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+
+    background-color: rgb(255, 235, 210);
+    border: 5px solid black;
+    text-align: center;
+} 
+
+#student-div {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 5px;
+
+    text-align: center;
+}
+
+#resp-div {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#resp-info {
+    background-color: green;
+    border: 1px solid rgb(0, 54, 0);
+
+    text-align: center;
+    padding-top: 15px;
+}
+
+#teacher-div {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#teacher-info {
+    background-color: rgb(255, 235, 210);
+    border: 1px solid rgb(255, 206, 146);
+
+    text-align: center;
+}
+
+.done {
+    background-color: green;
+    border: 1px solid rgb(0, 54, 0);
+}
+
+.not-done {
+    background-color: rgb(255, 235, 210);
+    border: 1px solid rgb(255, 206, 146);
+}

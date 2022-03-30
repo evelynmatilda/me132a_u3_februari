@@ -9,7 +9,7 @@ function renderStudent (student) {
     div.innerHTML += `
         <h2>${student.firstName} ${student.lastName} (total ${studentCredits(student)} credits)</h2>
         <h3>Courses:</h3>
-        <div id="coursesDiv">
+        <div id="course-div">
         ${allStudentCourses(student)}
         </div>
     `;
@@ -60,8 +60,8 @@ function allStudentCourses(student) {
         ) {
             let info = (div.innerHTML = `
             <div id="done">
-            <h4>${allCourses[i].title}</h4>
-            <p>${student.courses[i].started.semester} ${student.courses[i].started.year} 
+            <h4 id="course-h">${allCourses[i].title}</h4>
+            <p id="course-p">${student.courses[i].started.semester} ${student.courses[i].started.year} 
             ( ${student.courses[i].passedCredits} of 
             ${allCourses[student.courses[i].courseId].totalCredits} credits)
             </div>
@@ -70,8 +70,8 @@ function allStudentCourses(student) {
         } else {
             let info = (div.innerHTML = `
             <div id="not-done">
-            <h4>${allCourses[i].title}</h4>
-            <p>${student.courses[i].started.semester} ${student.courses[i].started.year} 
+            <h4 id="course-h">${allCourses[i].title}</h4>
+            <p id="course-p">${student.courses[i].started.semester} ${student.courses[i].started.year} 
             ( ${student.courses[i].passedCredits} of 
             ${allCourses[student.courses[i].courseId].totalCredits} credits)
             </div>
@@ -80,10 +80,7 @@ function allStudentCourses(student) {
         }
     }
 
-    return courseArray
-        .toString()
-        .split(",")
-        .join("")
+    return courseArray.toString().split(",").join("");
 }
 
 function inputResult () {
@@ -94,7 +91,7 @@ function inputResult () {
         document.querySelector("#student-results").innerHTML = "";
         if ("" == input.value) { 
             document.querySelector("#student-results").innerHTML = "";
-        } else if (allStudents[i].lastName.toLocaleLowerCase().includes(input.value)) {
+        } else if (allStudents[i].lastName.toLowerCase().includes(input.value.toLowerCase())) {
             resultArray.push(allStudents[i]);
         }
     }
