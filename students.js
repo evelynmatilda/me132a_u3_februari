@@ -62,7 +62,7 @@ function allStudentCourses(student) {
             <div id="done">
             <h4 id="course-h">${allCourses[i].title}</h4>
             <p id="course-p">${student.courses[i].started.semester} ${student.courses[i].started.year} 
-            ( ${student.courses[i].passedCredits} of 
+            <br>( ${student.courses[i].passedCredits} of 
             ${allCourses[student.courses[i].courseId].totalCredits} credits)
             </div>
             `)
@@ -72,7 +72,7 @@ function allStudentCourses(student) {
             <div id="not-done">
             <h4 id="course-h">${allCourses[i].title}</h4>
             <p id="course-p">${student.courses[i].started.semester} ${student.courses[i].started.year} 
-            ( ${student.courses[i].passedCredits} of 
+            <br>( ${student.courses[i].passedCredits} of 
             ${allCourses[student.courses[i].courseId].totalCredits} credits)
             </div>
             `)
