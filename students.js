@@ -46,7 +46,7 @@ function studentCredits (student) {
     return creditSum;
 }
 
-// function to get all courses a student has gone to and the suitable information and put it into a div-element
+// function to get all courses a student took and the suitable information and put it into a div-element
 function allStudentCourses(student) {
     let theCourses = [];
 

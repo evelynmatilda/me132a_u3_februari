@@ -1,9 +1,11 @@
 "use strict";
 
+// global varibles to easier reach our database
 let allStudents = DATABASE.students;
 let allTeachers = DATABASE.teachers;
 let allCourses = DATABASE.courses;
 
+// function to render a course from the database in an div-element with the information from other functions
 function renderCourse (id) {
     let div = document.createElement("div");
     div.id = "course-div";
@@ -26,6 +28,7 @@ function renderCourse (id) {
     return div;
 }
 
+// render all the courses that should show up when we search on their name
 function renderCourses (courses) {
     let coursesElement = document.getElementById("courses-result");
 
@@ -35,16 +38,19 @@ function renderCourses (courses) {
     }
 }
 
+// function to get the course title(the id will be filled in when we call "renderCourse" in "inputResult") 
 function courseTitle (id) {
     let course = DATABASE.courses[id];
     return course.title;
 }
 
+// function to get the course credits(the id will be filled in when we call "renderCourse" in "inputResult") 
 function totalCourseCredits (id) {
     let course = allCourses[id];
     return course.totalCredits;
 }
 
+// function to get the course responsible(the id will be filled in when we call "renderCourse" in "inputResult") 
 function courseResponsible (id) {
     let course = DATABASE.courses[id];
     let teachersName = allTeachers.map((teacher) => teacher.firstName + " " + teacher.lastName + " " + `(${teacher.post})`);
@@ -52,6 +58,7 @@ function courseResponsible (id) {
     return teachersName[resp];
 }
 
+// function to get the teachers and their post and putting that information into a div(the id will be filled in when we call "renderCourse" in "inputResult") 
 function allTeacherInfo (id) {
     let course = DATABASE.courses[id];
     let teachersNames = allTeachers.map((teacher) => teacher.firstName + " " + teacher.lastName + " " + `(${teacher.post})`);
@@ -68,16 +75,19 @@ function allTeacherInfo (id) {
     return teachers.toString().split(",").join(" ");
 }
 
+// function to get the passed credits each student that took to the course has 
 function passedCredits (takenCourse, student){
     let passedCredit = student.courses.filter((course) => course.courseId == takenCourse.courseId).map((course) => course.passedCredits)
     return passedCredit
 }
 
+// function to get the year each student that took the course has
 function courseStarted (takenCourse, student){
     let courseStart = student.courses.filter((course) => course.courseId == takenCourse.courseId).map((course) => `${course.started.semester} ${course.started.year}`)
     return courseStart
 }
 
+// function to get all the student that took that course and the suitable information and put it into a div-element
 function allStudentInfo (id) {
     let courseId = DATABASE.courses[id].courseId
     let students = allStudents.filter((student) => student.courses.some((course) => course.courseId == courseId))
@@ -105,6 +115,7 @@ function allStudentInfo (id) {
     return studentsDiv.toString().split(",").join(" ");
 }
 
+// function to compare the value in the input-element and the courses in out database so that we then get the correct result
 function inputResult () {
     let resultArray = [];
     let input = document.getElementById("course-input");
@@ -121,4 +132,5 @@ function inputResult () {
     renderCourses(resultArray);
 }
 
+// event listener so that results show up when a keyboard-key has been pressed and released
 document.getElementById("course-input").addEventListener("keyup", inputResult);
