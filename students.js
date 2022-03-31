@@ -1,8 +1,10 @@
 "use strict";
 
+// global varibles to easier reach our database
 let allStudents = DATABASE.students
 let allCourses = DATABASE.courses
 
+// function to render a student from the database in an div-element with the information from other functions
 function renderStudent (student) {
     let div = document.createElement("div");
     div.id = "student-div";
@@ -17,6 +19,7 @@ function renderStudent (student) {
     return div;
 }
 
+// render all the students that should show up when we search on their name
 function renderStudents (students) {
     let studentsElement = document.getElementById("student-results");
 
@@ -26,6 +29,7 @@ function renderStudents (students) {
     }
 }
 
+// function to get and calculate a students total credits
 function studentCredits (student) {
     let credits = [];
 
@@ -42,6 +46,7 @@ function studentCredits (student) {
     return creditSum;
 }
 
+// function to get all courses a student has gone to and the suitable information and put it into a div-element
 function allStudentCourses(student) {
     let theCourses = [];
 
@@ -83,6 +88,7 @@ function allStudentCourses(student) {
     return courseArray.toString().split(",").join("");
 }
 
+// function to compare the value in the input-element and the students in out database so that we then get the correct result
 function inputResult () {
     let resultArray = [];
     let input = document.getElementById("student-input");
@@ -99,4 +105,5 @@ function inputResult () {
     renderStudents(resultArray);
 }
 
+// event listener so that results show up when a keyboard-key has been pressed and released
 document.getElementById("student-input").addEventListener("keyup", inputResult);
